@@ -8,6 +8,13 @@ p {
   font-size: x-large;
 }
 
+button {
+  font-size: x-large;
+  padding: 2rem;
+  background-color: #131516;
+  color: #d8d4cf;
+}
+
 .wrapper {
   display: flex;
   justify-content: center;

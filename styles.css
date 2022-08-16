@@ -29,5 +29,17 @@ body {
 
 .calc-numbers {
   display: flex;
-  
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+}
+
+.calc-numbers > * {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.calc-operators {
+  display: flex;
+  flex-direction: column;
 }

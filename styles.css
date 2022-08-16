@@ -58,6 +58,12 @@ body {
   flex-direction: column;
 }
 
+.calc-operators > * {
+  display: flex;
+  justify-content: center;
+  padding: 9px;
+}
+
 .equals {
   background-color: #004daa;
 }

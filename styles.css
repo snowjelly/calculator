@@ -14,6 +14,7 @@ body {
   width: 300px;
   height: 450px;
   background-color: hsl(200, 7%, 30%);
+  border: 5px solid hsl(33, 0%, 50%);
 }
 
 .display {
@@ -43,10 +44,20 @@ body {
   display: flex;
   flex: 1;
   justify-content: center;
+  align-items: center;
   background-color: #131516;
+}
+
+.num p {
+  width: fit-content;
+  height: fit-content;
 }
 
 .calc-operators {
   display: flex;
   flex-direction: column;
+}
+
+.equals {
+  background-color: #004daa;
 }

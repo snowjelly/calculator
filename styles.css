@@ -24,19 +24,26 @@ body {
 .calc-content {
   display: flex;
   flex: 1;
-  justify-content: center;
+
 }
 
 .calc-numbers {
   display: flex;
   flex-direction: column;
   flex: 1;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .calc-numbers > * {
   display: flex;
-  justify-content: space-evenly;
+  flex: 1;
+}
+
+.num {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  background-color: #131516;
 }
 
 .calc-operators {

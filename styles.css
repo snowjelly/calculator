@@ -5,11 +5,13 @@ body {
 
 p {
   margin: 0px;
+  font-size: x-large;
 }
 
 .wrapper {
   display: flex;
   justify-content: center;
+  flex: 1;
 }
 
 .calc-wrapper {
@@ -18,7 +20,7 @@ p {
   width: 300px;
   height: 450px;
   background-color: hsl(200, 7%, 30%);
-  border: 5px solid hsl(33, 0%, 50%);
+  border: 1px solid #d8d4cf;
 }
 
 .display {
@@ -26,7 +28,12 @@ p {
   flex: 1;
   justify-content: right;
   align-items: flex-end;
-  border: 1px solid #131516;
+  border-bottom: 1px solid #d8d4cf;
+  background-color: #67cbdda9;
+}
+
+.display p {
+  color: #131516;
 }
 
 .calc-content {
@@ -41,10 +48,6 @@ p {
   flex: 3;
 }
 
-.calc-row1 {
-  border-top: 1px solid #131516;
-}
-
 .calc-numbers > * {
   display: flex;
   flex: 1;
@@ -56,7 +59,6 @@ p {
   justify-content: center;
   align-items: center;
   background-color: #131516;
-  border: 1px solid hsl(200, 7%, 30%);
 }
 
 .num p {
@@ -75,13 +77,6 @@ p {
   flex: 1;
   justify-content: center;
   align-items: center;
-  border-left: 1px solid #131516;
-  border-right: 1px solid #131516;
-  border-bottom: 1px solid #131516;
-}
-
-.clear {
-  border-top: 1px solid #131516;
 }
 
 .equals {

@@ -1,0 +1,33 @@
+body {
+  background-color: #131516;
+  color: #d8d4cf;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.calc-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 450px;
+  background-color: hsl(200, 7%, 30%);
+}
+
+.display {
+  display: flex;
+  flex: 1;
+}
+
+.calc-content {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.calc-numbers {
+  display: flex;
+  
+}

@@ -1,6 +1,8 @@
 let concat = "";
-let num1 = "";
+let num1 = 0;
+let num2 = 0;
 let operatorSelected = false;
+//  might be able to compare num1 to "" instead of using operatorSelected
 let operationScheduled = "";
 const log = (e) => {
   const btnValue = e.target.childNodes[0].nodeValue.toString();
@@ -13,7 +15,7 @@ const log = (e) => {
       concat = concat.substring(0, concat.length -1);
       console.log(concat);
     } else if (operatorSelected != true && (operator === "÷" || operator === "×" || operator === "-" || operator === "+")) {
-      num1 = concat;
+      num1 = parseInt(concat);
       concat = "";
       operatorSelected = true;
         if (operator === "÷") {
@@ -25,8 +27,19 @@ const log = (e) => {
         } else if (operator === "+") {
           operationScheduled = "add";
         }
-    } else if (operatorSelected) {
-      
+    } else if (operator === "=" && operatorSelected && concat !== "") {
+      num2 = parseInt(concat);
+      concat = "";
+      operatorSelected = false;
+        if (operationScheduled === "divide") {
+          console.log(divide(num1, num2));
+        } else if (operationScheduled === "multiply") {
+          
+        } else if (operationScheduled === "subtract") {
+
+        } else if (operationScheduled === "add") {
+
+        }
     }
   } else {
     concat = concat.concat(btnValue);

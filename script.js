@@ -5,7 +5,7 @@ let concat = "";
 let num1 = 0;
 let num2 = 0;
 let operatorSelected = false;
-//  might be able to compare num1 to "" instead of using operatorSelected
+//  might be able to compare num1 to 0 instead of using operatorSelected
 let operationScheduled = "";
 
 
@@ -13,6 +13,10 @@ const getOperator = (btnValue) => {
   if (isNaN(parseInt(btnValue))) {
     const operator = btnValue;
     return operator;
+  } else {
+    concat = concat.concat(btnValue);
+    updateDisplay(displayValue);
+    return console.log(concat);
   }
 }
 

@@ -1,3 +1,24 @@
+let concat = "";
+const log = (e) => {
+  const btnValue = e.target.childNodes[0].nodeValue.toString();
+  //console.log(btnValue);
+  if (isNaN(parseInt(btnValue))) {
+    const operator = btnValue;
+    if (operator === "C") {
+      concat = "";
+    }
+  } else {
+    concat = concat.concat(btnValue);
+    console.log(concat);
+  }
+}
+
+const btns = document.querySelectorAll('button');
+btns.forEach(btn => btn.addEventListener('click', log));
+
+
+
+
 const add = (num1, num2) => {
   return num1 + num2;
 }

@@ -9,15 +9,15 @@ let operatorSelected = false;
 let operationScheduled = "";
 
 
-const getOperator = (btnValue) => {
-  if (isNaN(parseInt(btnValue))) {
-    const operator = btnValue;
-    return operator;
-  } else {
-    concat = concat.concat(btnValue);
-    updateDisplay(displayValue);
-    return console.log(concat);
-  }
+const clear = () => {
+  concat = "";
+  displayValue.innerHTML = concat;
+  return "Cleared";
+}
+
+const backspace = () => {
+  concat = concat.substring(0, concat.length -1);
+  displayValue.innerHTML = concat;
 }
 
 
@@ -28,12 +28,9 @@ const log = (e) => {
   if (isNaN(parseInt(btnValue))) {
     const operator = btnValue;
     if (operator === "C") {
-      concat = "";
-      displayValue.innerHTML = concat;
+      clear();
     } else if (operator === "⌫") {
-      concat = concat.substring(0, concat.length -1);
-      console.log(concat);
-      displayValue.innerHTML = concat;
+      backspace();
     } else if (operatorSelected != true && (operator === "÷" || operator === "×" || operator === "-" || operator === "+")) {
       num1 = parseInt(concat);
       displaySubValue.innerHTML = num1 + " " + operator;

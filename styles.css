@@ -8,11 +8,25 @@ p {
   font-size: x-large;
 }
 
-button {
+.num button {
   font-size: x-large;
   padding: 2rem;
   background-color: #131516;
   color: #d8d4cf;
+}
+
+.operator button {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  font-size: x-large;
+  padding: 0.7rem;
+  background-color: hsl(200, 7%, 30%);
+  color: #d8d4cf;
+}
+
+.equals button {
+  background-color: #004daa;
 }
 
 .wrapper {
@@ -63,8 +77,7 @@ button {
 .num {
   display: flex;
   flex: 1;
-  justify-content: center;
-  align-items: center;
+
   background-color: #131516;
 }
 
@@ -77,15 +90,14 @@ button {
   display: flex;
   flex-direction: column;
   flex: 1;
+  justify-content: space-evenly;
+}
+
+.calc-row4 .num {
+  justify-content: center;
 }
 
 .calc-operators > * {
   display: flex;
   flex: 1;
-  justify-content: center;
-  align-items: center;
-}
-
-.equals {
-  background-color: #004daa;
 }

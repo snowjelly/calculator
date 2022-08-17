@@ -6,6 +6,9 @@ const log = (e) => {
     const operator = btnValue;
     if (operator === "C") {
       concat = "";
+    } else if (operator === "⌫") {
+      concat = concat.substring(0, concat.length -1);
+      console.log(concat);
     }
   } else {
     concat = concat.concat(btnValue);

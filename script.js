@@ -1,4 +1,7 @@
 let concat = "";
+let num1 = "";
+let operatorSelected = false;
+let operationScheduled = "";
 const log = (e) => {
   const btnValue = e.target.childNodes[0].nodeValue.toString();
   //console.log(btnValue);
@@ -9,6 +12,21 @@ const log = (e) => {
     } else if (operator === "⌫") {
       concat = concat.substring(0, concat.length -1);
       console.log(concat);
+    } else if (operatorSelected != true && (operator === "÷" || operator === "×" || operator === "-" || operator === "+")) {
+      num1 = concat;
+      concat = "";
+      operatorSelected = true;
+        if (operator === "÷") {
+          operationScheduled = "divide";
+        } else if (operator === "×") {
+          operationScheduled = "multiply"
+        } else if (operator === "-") {
+          operationScheduled = "subtract";
+        } else if (operator === "+") {
+          operationScheduled = "add";
+        }
+    } else if (operatorSelected) {
+      
     }
   } else {
     concat = concat.concat(btnValue);

@@ -5,9 +5,7 @@ let concat = "";
 let num1 = 0;
 let num2 = 0;
 let num1Stored = false;
-//  might be able to compare num1 to 0 instead of using operatorSelected
-let operationScheduled = "";
-
+let operator = "";
 
 const clear = () => {
   concat = "";
@@ -42,35 +40,36 @@ const operate = (num1, operator, num2) => {
 const log = (e) => {
   const btnValue = e.target.childNodes[0].nodeValue.toString();
   //console.log(btnValue);
-  if (isNaN(parseInt(btnValue)) && btnValue !== "=") { // if an operator is clicked besides equals
-    const operator = btnValue;
-    if (btnValue === "C") {
-      clear();
-    } else if (operator === "⌫") {
-      backspace();
-    } else if (operator === "÷" || operator === "×" || operator === "-" || operator === "+") {
-      if (num1Stored === false) {
-        num1 = parseInt(concat);
-        concat = "";
-        displayValue.innerHTML = concat;
-        displaySubValue.innerHTML = num1 + " " + operator;
-        num1Stored = true;
-      } else if (num1Stored) {
-        num2 = parseInt(concat);
-        concat = "";
-        const result = operate(num1, operator, num2);
-        displayValue.innerHTML = result;
-        num1 = result;
-        displaySubValue.innerHTML = num1 + " " + operator;
-      }
-    } 
-  } else if (btnValue === "=" && num1Stored) { // if equals is clicked
+    
+  if (btnValue === "C") {
+    clear();
+  } else if (btnValue === "⌫") {
+    backspace();
+  } else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+") && concat != "") {
+    operator = btnValue;
+    if (num1Stored === false) {
+      num1 = parseInt(concat);
+      concat = "";
+      displayValue.innerHTML = concat;
+      displaySubValue.innerHTML = num1 + " " + operator;
+      num1Stored = true;
+    } else if (num1Stored) {
+      num2 = parseInt(concat);
+      concat = "";
+      const result = operate(num1, operator, num2);
+      displayValue.innerHTML = result;
+      num1 = result;
+      displaySubValue.innerHTML = num1 + " " + operator;
+    }
+  } else if (btnValue === "=" && num1Stored && concat != "") { 
     num2 = parseInt(concat);
     concat = "";
+    console.log(operator);
     const result = operate(num1, operator, num2);
-    displaySubValue.innerHTML = displaySubValue.concat(" " + operator)
+    displaySubValue.innerHTML = displaySubValue.innerHTML.concat(" " + num2 + " " + btnValue);
+    displayValue.innerHTML = result;
     num1Stored = false;
-  } else { //if a number is clicked
+  } else if (isNaN(parseInt(btnValue)) !== true){ //if a number is clicked
     concat = concat.concat(btnValue);
     console.log(concat);
     displayValue.innerHTML = concat;

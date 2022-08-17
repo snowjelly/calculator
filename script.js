@@ -1,4 +1,5 @@
-const displayValue = document.querySelector('.display p');
+const displayValue = document.querySelector('.display');
+const displaySubValue = document.querySelector('.sub-display');
 
 let concat = "";
 let num1 = 0;
@@ -6,6 +7,17 @@ let num2 = 0;
 let operatorSelected = false;
 //  might be able to compare num1 to "" instead of using operatorSelected
 let operationScheduled = "";
+
+
+const getOperator = (btnValue) => {
+  if (isNaN(parseInt(btnValue))) {
+    const operator = btnValue;
+    return operator;
+  }
+}
+
+
+
 const log = (e) => {
   const btnValue = e.target.childNodes[0].nodeValue.toString();
   //console.log(btnValue);
@@ -20,6 +32,7 @@ const log = (e) => {
       displayValue.innerHTML = concat;
     } else if (operatorSelected != true && (operator === "÷" || operator === "×" || operator === "-" || operator === "+")) {
       num1 = parseInt(concat);
+      displaySubValue.innerHTML = num1 + " " + operator;
       concat = "";
       displayValue.innerHTML = concat;
       operatorSelected = true;
@@ -34,16 +47,21 @@ const log = (e) => {
         }
     } else if (operator === "=" && operatorSelected && concat !== "") {
       num2 = parseInt(concat);
+      displaySubValue.innerHTML = displaySubValue.innerHTML.concat(" " + concat); 
       concat = "";
       operatorSelected = false;
         if (operationScheduled === "divide") {
-          displayValue.innerHTML = divide(num1, num2);
+          const result = divide(num1, num2);
+          displayValue.innerHTML = result;
         } else if (operationScheduled === "multiply") {
-          displayValue.innerHTML = multiply(num1, num2);
+          const result = multiply(num1, num2);
+          displayValue.innerHTML = result;
         } else if (operationScheduled === "subtract") {
-          displayValue.innerHTML = subtract(num1, num2);
+          const result = subtract(num1, num2);
+          displayValue.innerHTML = result;
         } else if (operationScheduled === "add") {
-          displayValue.innerHTML = add(num1, num2);
+          const result = add(num1, num2);
+          displayValue.innerHTML = result;
         }
     }
   } else {

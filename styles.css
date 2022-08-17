@@ -8,6 +8,10 @@ p {
   font-size: x-large;
 }
 
+.sub-display {
+  font-size: 1rem;
+}
+
 .num button {
   font-size: x-large;
   padding: 2rem;
@@ -44,8 +48,9 @@ p {
   border: 1px solid #d8d4cf;
 }
 
-.display {
+.display-wrapper {
   display: flex;
+  flex-direction: column;
   flex: 1;
   justify-content: right;
   align-items: flex-end;
@@ -53,7 +58,7 @@ p {
   background-color: #67cbdda9;
 }
 
-.display p {
+.display-wrapper p {
   color: #131516;
 }
 

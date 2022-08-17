@@ -1,3 +1,5 @@
+const displayValue = document.querySelector('.display p');
+
 let concat = "";
 let num1 = 0;
 let num2 = 0;
@@ -11,12 +13,15 @@ const log = (e) => {
     const operator = btnValue;
     if (operator === "C") {
       concat = "";
+      displayValue.innerHTML = concat;
     } else if (operator === "⌫") {
       concat = concat.substring(0, concat.length -1);
       console.log(concat);
+      displayValue.innerHTML = concat;
     } else if (operatorSelected != true && (operator === "÷" || operator === "×" || operator === "-" || operator === "+")) {
       num1 = parseInt(concat);
       concat = "";
+      displayValue.innerHTML = concat;
       operatorSelected = true;
         if (operator === "÷") {
           operationScheduled = "divide";
@@ -32,18 +37,19 @@ const log = (e) => {
       concat = "";
       operatorSelected = false;
         if (operationScheduled === "divide") {
-          console.log(divide(num1, num2));
+          displayValue.innerHTML = divide(num1, num2);
         } else if (operationScheduled === "multiply") {
-          console.log(multiply(num1, num2));
+          displayValue.innerHTML = multiply(num1, num2);
         } else if (operationScheduled === "subtract") {
-          console.log(subtract(num1, num2));
+          displayValue.innerHTML = subtract(num1, num2);
         } else if (operationScheduled === "add") {
-          console.log(add(num1, num2));
+          displayValue.innerHTML = add(num1, num2);
         }
     }
   } else {
     concat = concat.concat(btnValue);
     console.log(concat);
+    displayValue.innerHTML = concat;
   }
 }
 

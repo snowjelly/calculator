@@ -62,14 +62,20 @@ const log = (e) => {
     clear();
   } else if (btnValue === "⌫") {
     backspace();
-  } else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+")) {
-    operator = btnValue;
-    if (num1Stored) { //runs if an operator is chained. uses the previous operator to equals(). 
-      equals(prevOperator);
-      console.log(operator);
-      concat = "";
-      displayValue.innerHTML = concat;
-      displaySubValue.innerHTML = num1 + " " + operator;
+  } else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+" || btnValue === "=")) {
+    if (btnValue !== "=") {
+      operator = btnValue;
+    }
+    if (num1Stored) { 
+      if (btnValue === "=") {
+        equals(operator);
+      } else {
+        equals(prevOperator);
+        console.log(operator);
+        concat = "";
+        displayValue.innerHTML = concat;
+        displaySubValue.innerHTML = num1 + " " + operator;
+      }
     } else {
       console.log(operator);
       num1 = parseInt(concat);
@@ -79,8 +85,6 @@ const log = (e) => {
       num1Stored = true;
       prevOperator = operator;
     }
-  } else if (btnValue === "=" && concat != "") { //always use the most recent operator
-    equals(operator);
   } else if (isNaN(parseInt(btnValue)) !== true){ //if a number is clicked
     concat = concat.concat(btnValue);
     console.log(concat);

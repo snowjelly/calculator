@@ -41,14 +41,8 @@ const operate = (num1, operator, num2) => {
     return add(num1, num2);
   }
 }
-// *new and improved bug
-// input: 4 * 2 = (8) - 1 (=7) correct
-// print operations: 4, *, 2, = 8, -, 1, = 7 correct
-// 
-
-// how i fixed the old bug: concat was being reset instead of being set to the result inside of equals()
-// causing the operator if statement to be ignored entirely(concat !== ""). which is why it was broken and also why it didnt print anything
-// 
+// **new and improved bug
+// since concat is updated to the result inside equals(). i need num1 to parse concat everytime an operator is pressed.
 const equals = (operator) => {
   num2 = parseInt(concat);
   const result = operate(num1, operator, num2);

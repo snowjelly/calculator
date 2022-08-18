@@ -62,23 +62,23 @@ const log = (e) => {
     clear();
   } else if (btnValue === "⌫") {
     backspace();
-  } else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+") && concat !== "") {
+  } else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+")) {
+    operator = btnValue;
     if (num1Stored) { //runs if an operator is chained. uses the previous operator to equals(). 
       equals(prevOperator);
-    } //else if () {
-      //concat = "";
-      //displayValue.innerHTML = concat;
-      //displaySubValue.innerHTML = num1 + " " + operator;
-      //console.log('nah')
-    //}
-    operator = btnValue;
-    console.log(operator);
-    num1 = parseInt(concat);
-    concat = "";
-    displayValue.innerHTML = concat;
-    displaySubValue.innerHTML = num1 + " " + operator;
-    num1Stored = true;
-    prevOperator = operator;
+      console.log(operator);
+      concat = "";
+      displayValue.innerHTML = concat;
+      displaySubValue.innerHTML = num1 + " " + operator;
+    } else {
+      console.log(operator);
+      num1 = parseInt(concat);
+      concat = "";
+      displayValue.innerHTML = concat;
+      displaySubValue.innerHTML = num1 + " " + operator;
+      num1Stored = true;
+      prevOperator = operator;
+    }
   } else if (btnValue === "=" && concat != "") { //always use the most recent operator
     equals(operator);
   } else if (isNaN(parseInt(btnValue)) !== true){ //if a number is clicked

@@ -63,29 +63,29 @@ const log = (e) => {
   } else if (btnValue === "⌫") {
     backspace();
   } else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+") && concat !== "") {
+    if (num1Stored) { //runs if an operator is chained. uses the previous operator to equals(). 
+      equals(prevOperator);
+    } //else if () {
+      //concat = "";
+      //displayValue.innerHTML = concat;
+      //displaySubValue.innerHTML = num1 + " " + operator;
+      //console.log('nah')
+    //}
     operator = btnValue;
     console.log(operator);
-    if (num1Stored === false) { //when num1 data is empty. only happens on first run or on clear().
-      num1 = parseInt(concat);
-      concat = "";
-      displayValue.innerHTML = concat;
-      displaySubValue.innerHTML = num1 + " " + operator;
-      num1Stored = true;
-      prevOperator = operator;
-    } else if (num1Stored && num2 !== 0) { //runs if an operator is chained. uses the previous operator to equals(). 
-      equals(prevOperator);
-    } else if (num1Stored && num2 === 0) {
-      concat = "";
-      displayValue.innerHTML = concat;
-      displaySubValue.innerHTML = num1 + " " + operator;
-    }
+    num1 = parseInt(concat);
+    concat = "";
+    displayValue.innerHTML = concat;
+    displaySubValue.innerHTML = num1 + " " + operator;
+    num1Stored = true;
+    prevOperator = operator;
   } else if (btnValue === "=" && concat != "") { //always use the most recent operator
     equals(operator);
   } else if (isNaN(parseInt(btnValue)) !== true){ //if a number is clicked
     concat = concat.concat(btnValue);
     console.log(concat);
     displayValue.innerHTML = concat;
-  }
+  } 
 }
 
 const btns = document.querySelectorAll('button');

@@ -48,10 +48,12 @@ const equals = (operator) => {
   const result = operate(num1, operator, num2);
   console.log("= " + result);
   displaySubValue.innerHTML = num1 + " " + operator + " " + num2 + " = ";
-  num1 = result;
   displayValue.innerHTML = result;
-  concat = result.toString();
-  num2 = 0; //reset num2
+  //reset values
+  num1 = 0; 
+  num2 = 0; 
+  concat = "";
+  return result;
 }
 
 const log = (e) => {
@@ -63,20 +65,19 @@ const log = (e) => {
   } else if (btnValue === "⌫") {
     backspace();
   } else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+" || btnValue === "=")) {
-    if (btnValue !== "=") {
+    if (btnValue !== "=") { //equals is not an operator
       operator = btnValue;
     }
-    if (num1Stored) { 
+    if (num1Stored) { //equals
       if (btnValue === "=") {
-        equals(operator);
-      } else {
-        equals(prevOperator);
+        num1 = equals(operator);
+      } else { //chain
+        num1 = equals(prevOperator);
         console.log(operator);
-        concat = "";
         displayValue.innerHTML = concat;
         displaySubValue.innerHTML = num1 + " " + operator;
       }
-    } else {
+    } else { //first run
       console.log(operator);
       num1 = parseInt(concat);
       concat = "";

@@ -19,6 +19,8 @@ const clear = () => {
   num2 = 0;
   num1Stored = false;
   operator = "";
+  prevOperator = "";
+  lastInput = "";
   displayValue.innerHTML = concat;
   displaySubValue.innerHTML = concat;
   return "Cleared";
@@ -85,16 +87,17 @@ const initNum2 = () => {
 
 const chain = () => {
   if (num1 === 0 || num2 === 0) {
-    return console.log("missing parameters: " + " num1= " + num1 + " operator= " + operator + " num2= " + num2);
+    return console.log("missing parameters: " + " num1= " + num1 + " operator= " + prevOperator + " num2= " + num2);
   }
-  const result = operate(num1, operator, num2);
+  const result = operate(num1, prevOperator, num2);
   console.log("= " + result);
   displayValue.innerHTML = concat;
-  displaySubValue.innerHTML = num1 + " " + operator;
+  displaySubValue.innerHTML = result + " " + operator;
   // set num1 to result
   num1 = result; 
   //reset num2
   num2 = 0; 
+  prevOperator = operator;
   return result;
 }
 
@@ -106,7 +109,7 @@ const log = (e) => {
     clear();
   } else if (btnValue === "⌫") {
     backspace();
-  } else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+" || btnValue === "=") && lastInput !== "operator" && lastInput !== "equals" && lastInput !== "") {
+  } else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+" || btnValue === "=") && lastInput !== "") {
     if (btnValue !== "=") { //equals is not an operator
       operator = btnValue;
       lastInput = "operator";

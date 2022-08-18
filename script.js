@@ -41,12 +41,14 @@ const operate = (num1, operator, num2) => {
     return add(num1, num2);
   }
 }
-// bug
-// input: 4 * 2 (=8) - 1 (=8)
-// print operations: 4, *, 2, = 8, (not printed: -) 1, = 8 (false: = 8, should be: = 7, calc display: 8 * 1 = 8)
-// input 4:num1, input:*, stored num1, input 2:num2, equals():result=num1 operator=*, input:-, input:1, equals()
+// *new and improved bug
+// input: 4 * 2 = (8) - 1 (=7) correct
+// print operations: 4, *, 2, = 8, -, 1, = 7 correct
+// 
 
-// changes: added prevOperator. set operator the second it's pressed.
+// how i fixed the old bug: concat was being reset instead of being set to the result inside of equals()
+// causing the operator if statement to be ignored entirely(concat !== ""). which is why it was broken and also why it didnt print anything
+// 
 const equals = (operator) => {
   num2 = parseInt(concat);
   const result = operate(num1, operator, num2);
@@ -54,7 +56,7 @@ const equals = (operator) => {
   displaySubValue.innerHTML = num1 + " " + operator + " " + num2 + " = ";
   num1 = result;
   displayValue.innerHTML = result;
-  concat = result;
+  concat = result.toString();
   num2 = 0; //reset num2
 }
 
@@ -80,6 +82,8 @@ const log = (e) => {
       equals(prevOperator);
     } else if (num1Stored && num2 === 0) {
       concat = "";
+      displayValue.innerHTML = concat;
+      displaySubValue.innerHTML = num1 + " " + operator;
     }
   } else if (btnValue === "=" && concat != "") { //always use the most recent operator
     equals(operator);

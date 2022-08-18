@@ -6,9 +6,14 @@ let num1 = 0;
 let num2 = 0;
 let num1Stored = false;
 let operator = "";
+let prevOperator = "";
 
 const clear = () => {
   concat = "";
+  num1 = 0;
+  num2 = 0;
+  num1Stored = false;
+  operator = "";
   displayValue.innerHTML = concat;
   displaySubValue.innerHTML = concat;
   return "Cleared";
@@ -36,6 +41,22 @@ const operate = (num1, operator, num2) => {
     return add(num1, num2);
   }
 }
+// bug
+// input: 4 * 2 (=8) - 1 (=8)
+// print operations: 4, *, 2, = 8, (not printed: -) 1, = 8 (false: = 8, should be: = 7, calc display: 8 * 1 = 8)
+// input 4:num1, input:*, stored num1, input 2:num2, equals():result=num1 operator=*, input:-, input:1, equals()
+
+// changes: added prevOperator. set operator the second it's pressed.
+const equals = (operator) => {
+  num2 = parseInt(concat);
+  const result = operate(num1, operator, num2);
+  console.log("= " + result);
+  displaySubValue.innerHTML = num1 + " " + operator + " " + num2 + " = ";
+  num1 = result;
+  displayValue.innerHTML = result;
+  concat = result;
+  num2 = 0; //reset num2
+}
 
 const log = (e) => {
   const btnValue = e.target.childNodes[0].nodeValue.toString();
@@ -45,30 +66,23 @@ const log = (e) => {
     clear();
   } else if (btnValue === "⌫") {
     backspace();
-  } else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+") && concat != "") {
+  } else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+") && concat !== "") {
     operator = btnValue;
-    if (num1Stored === false) {
+    console.log(operator);
+    if (num1Stored === false) { //when num1 data is empty. only happens on first run or on clear().
       num1 = parseInt(concat);
       concat = "";
       displayValue.innerHTML = concat;
       displaySubValue.innerHTML = num1 + " " + operator;
       num1Stored = true;
-    } else if (num1Stored) {
-      num2 = parseInt(concat);
+      prevOperator = operator;
+    } else if (num1Stored && num2 !== 0) { //runs if an operator is chained. uses the previous operator to equals(). 
+      equals(prevOperator);
+    } else if (num1Stored && num2 === 0) {
       concat = "";
-      const result = operate(num1, operator, num2);
-      displayValue.innerHTML = result;
-      num1 = result;
-      displaySubValue.innerHTML = num1 + " " + operator;
     }
-  } else if (btnValue === "=" && num1Stored && concat != "") { 
-    num2 = parseInt(concat);
-    concat = "";
-    console.log(operator);
-    const result = operate(num1, operator, num2);
-    displaySubValue.innerHTML = displaySubValue.innerHTML.concat(" " + num2 + " " + btnValue);
-    displayValue.innerHTML = result;
-    num1Stored = false;
+  } else if (btnValue === "=" && concat != "") { //always use the most recent operator
+    equals(operator);
   } else if (isNaN(parseInt(btnValue)) !== true){ //if a number is clicked
     concat = concat.concat(btnValue);
     console.log(concat);

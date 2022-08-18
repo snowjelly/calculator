@@ -7,6 +7,11 @@ let num2 = 0;
 let num1Stored = false;
 let operator = "";
 let prevOperator = "";
+let lastInput = "";
+
+const logging = () => {
+  console.log(concat, num1, num2, num1Stored, operator, prevOperator, lastInput);
+}
 
 const clear = () => {
   concat = "";
@@ -43,19 +48,20 @@ const operate = (num1, operator, num2) => {
 }
 // **new and improved bug
 // since concat is updated to the result inside equals(). i need num1 to parse concat everytime an operator is pressed.
+/*
 const equals = (operator) => {
   num2 = parseInt(concat);
   const result = operate(num1, operator, num2);
   console.log("= " + result);
   displaySubValue.innerHTML = num1 + " " + operator + " " + num2 + " = ";
   displayValue.innerHTML = result;
+  num1 = result; 
   //reset values
-  num1 = 0; 
   num2 = 0; 
   concat = "";
   return result;
 }
-
+*/
 const log = (e) => {
   const btnValue = e.target.childNodes[0].nodeValue.toString();
   //console.log(btnValue);
@@ -67,17 +73,24 @@ const log = (e) => {
   } else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+" || btnValue === "=")) {
     if (btnValue !== "=") { //equals is not an operator
       operator = btnValue;
+      lastInput = "operator";
     }
     if (num1Stored) { //equals
-      if (btnValue === "=") {
+      if (btnValue === "=" && lastInput === "number") {
+        lastInput = "equals";
         num1 = equals(operator);
-      } else { //chain
-        num1 = equals(prevOperator);
+      } else if (concat !== ""){ //chain
+        
+        equals(prevOperator);
         console.log(operator);
         displayValue.innerHTML = concat;
         displaySubValue.innerHTML = num1 + " " + operator;
+      } else {
+        console.log(operator);
+        num2 = parseInt(concat);
+        equals(prevOperator);
       }
-    } else { //first run
+    } else if (num1Stored === false){ //first run
       console.log(operator);
       num1 = parseInt(concat);
       concat = "";
@@ -90,6 +103,7 @@ const log = (e) => {
     concat = concat.concat(btnValue);
     console.log(concat);
     displayValue.innerHTML = concat;
+    lastInput = "number";
   } 
 }
 

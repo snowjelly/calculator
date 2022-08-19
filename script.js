@@ -12,30 +12,29 @@ let lastInput = "";
 let userInput = {
   numBuffer: "",
   num1: 0,
-  operator,
+  operator: "",
+  prevOperator: "",
   num2: 0,
 }
 
 const logging = () => {
-  console.log(numBuffer, num1, num2, num1Stored, operator, prevOperator, lastInput);
+  console.table(userInput)
 }
 
 const clear = () => {
-  numBuffer = "";
-  num1 = 0;
-  num2 = 0;
-  num1Stored = false;
-  operator = "";
-  prevOperator = "";
-  lastInput = "";
-  displayValue.innerHTML = numBuffer;
-  displaySubValue.innerHTML = numBuffer;
+  userInput.numBuffer = "";
+  userInput.num1 = 0;
+  userInput.num2 = 0;
+  userInput.operator = "";
+  userInput.prevOperator = "";
+  displayValue.innerHTML = "";
+  displaySubValue.innerHTML = "";
   return "Cleared";
 }
 
 const backspace = () => {
-  numBuffer = numBuffer.substring(0, numBuffer.length -1);
-  displayValue.innerHTML = numBuffer;
+  userInput.numBuffer = userInput.numBuffer.substring(0, userInput.numBuffer.length -1);
+  displayValue.innerHTML = userInput.numBuffer;
 }
 
 const operate = (num1, operator, num2) => {
@@ -55,12 +54,10 @@ const operate = (num1, operator, num2) => {
     return add(num1, num2);
   }
 }
-// **new and improved bug
-// since numBuffer is updated to the result inside equals(). i need num1 to parse numBuffer everytime an operator is pressed.
 
 const equals = () => {
-  if (num1 === 0 || num2 === 0) {
-    return console.log("missing parameters: " + " num1= " + num1 + " operator= " + operator + " num2= " + num2);
+  if (userInput.num1 === 0 || userInput.num2 === 0) {
+    return console.log("missing parameters: " + " num1= " + userInput.num1 + " operator= " + userInput.operator + " num2= " + userInput.num2);
   }
   const result = operate(num1, operator, num2);
   console.log("= " + result);
@@ -137,10 +134,9 @@ const log = (e) => {
       initNum1();
     }
   } else if (isNaN(parseInt(btnValue)) !== true){ //if a number is clicked
-    numBuffer = numBuffer.concat(btnValue);
+    userInput.numBuffer = numBuffer.concat(btnValue);
     console.log(numBuffer);
-    displayValue.innerHTML = numBuffer;
-    lastInput = "number";
+    displayValue.innerHTML = userInput.numBuffer;
   } 
   logging();
 }

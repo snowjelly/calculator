@@ -56,13 +56,11 @@ const equals = () => {
     return console.log("missing parameters: " + " num1= " + userInput.num1 + " operator= " + userInput.operator + " num2= " + userInput.num2);
   }
   const result = operate(userInput.num1, userInput.operator, userInput.num2);
-  console.log("= " + result);
   displaySubValue.innerHTML = userInput.num1 + " " + userInput.operator + " " + userInput.num2 + " = ";
   displayValue.innerHTML = result;
-  // set num1 to result
-  userInput.num1 = result; 
-  //reset num2
+  userInput.num1 = result;
   userInput.num2 = 0; 
+  //userInput.prevOperator = userInput.operator;
   return result;
 }
 
@@ -78,7 +76,7 @@ const initNum1 = () => {
 
 const initNum2 = () => {
   if (userInput.numBuffer === "") {
-    return console.log("numBuffer is empty");
+    return userInput.num1;
   }
   userInput.num2 = parseInt(userInput.numBuffer);
   userInput.numBuffer = "";
@@ -90,12 +88,10 @@ const chain = () => {
     return console.log("missing parameters: " + " num1= " + userInput.num1 + " operator= " + userInput.prevOperator + " num2= " + userInput.num2);
   }
   const result = operate(userInput.num1, userInput.prevOperator, userInput.num2);
-  console.log("= " + result);
   displayValue.innerHTML = userInput.numBuffer;
   displaySubValue.innerHTML = result + " " + userInput.operator;
-  // set num1 to result
-  userInput.num1 = result; 
-  //reset num2
+  //update variables
+  userInput.num1 = result;
   userInput.num2 = 0; 
   userInput.prevOperator = userInput.operator;
   return result;
@@ -110,30 +106,28 @@ const log = (e) => {
   } else if (btnValue === "⌫") {
     backspace();
   } else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+")) {
-    if (typeof inputStore[inputStore.length - 1] === 'string' || userInput.numBuffer === "") {
+    if (typeof inputStore[inputStore.length - 1] === 'string' && userInput.numBuffer === "") {
+      logging();
       return console.log('cant do that fr');
     }
+    userInput.operator = btnValue;
     //logging();
 
     if (userInput.num1Stored === false) { //init num1 on first run
       inputStore.push(userInput.num1 = initNum1());
     } else { //chaining operators
       inputStore.push(userInput.num2 = initNum2());
-      //console.log(userInput.operator);
       inputStore.push("="); 
-      inputStore.push(1000); //chain();
+      inputStore.push(chain()); 
     }
-    inputStore.push(btnValue); //push operator
+    inputStore.push(btnValue);
     inputStore.operator = btnValue;
     logging();
   } else if (btnValue === "=") {
-    if (typeof inputStore[inputStore.length - 1] === 'string' || userInput.numBuffer === "") {
-      return console.log('cant do that fr');
-    }
-      inputStore.push(userInput.num2 = initNum2());
-      inputStore.push("=");
-      inputStore.push(1000); //equals()
-      logging();
+    inputStore.push(userInput.num2 = initNum2());
+    inputStore.push("=");
+    inputStore.push(equals()); //equals()
+    logging();
   } else if (isNaN(parseInt(btnValue)) !== true){ //if a number is clicked
     userInput.numBuffer = userInput.numBuffer.concat(btnValue);
     console.log(userInput.numBuffer);

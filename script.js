@@ -1,7 +1,7 @@
 const displayValue = document.querySelector('.display');
 const displaySubValue = document.querySelector('.sub-display');
 
-let concat = "";
+let numBuffer = "";
 let num1 = 0;
 let num2 = 0;
 let num1Stored = false;
@@ -9,26 +9,33 @@ let operator = "";
 let prevOperator = "";
 let lastInput = "";
 
+let userInput = {
+  numBuffer: "",
+  num1: 0,
+  operator,
+  num2: 0,
+}
+
 const logging = () => {
-  console.log(concat, num1, num2, num1Stored, operator, prevOperator, lastInput);
+  console.log(numBuffer, num1, num2, num1Stored, operator, prevOperator, lastInput);
 }
 
 const clear = () => {
-  concat = "";
+  numBuffer = "";
   num1 = 0;
   num2 = 0;
   num1Stored = false;
   operator = "";
   prevOperator = "";
   lastInput = "";
-  displayValue.innerHTML = concat;
-  displaySubValue.innerHTML = concat;
+  displayValue.innerHTML = numBuffer;
+  displaySubValue.innerHTML = numBuffer;
   return "Cleared";
 }
 
 const backspace = () => {
-  concat = concat.substring(0, concat.length -1);
-  displayValue.innerHTML = concat;
+  numBuffer = numBuffer.substring(0, numBuffer.length -1);
+  displayValue.innerHTML = numBuffer;
 }
 
 const operate = (num1, operator, num2) => {
@@ -49,7 +56,7 @@ const operate = (num1, operator, num2) => {
   }
 }
 // **new and improved bug
-// since concat is updated to the result inside equals(). i need num1 to parse concat everytime an operator is pressed.
+// since numBuffer is updated to the result inside equals(). i need num1 to parse numBuffer everytime an operator is pressed.
 
 const equals = () => {
   if (num1 === 0 || num2 === 0) {
@@ -67,9 +74,9 @@ const equals = () => {
 }
 
 const initNum1 = () => {
-  num1 = parseInt(concat);
-  concat = "";
-  displayValue.innerHTML = concat;
+  num1 = parseInt(numBuffer);
+  numBuffer = "";
+  displayValue.innerHTML = numBuffer;
   displaySubValue.innerHTML = num1 + " " + operator;
   num1Stored = true;
   prevOperator = operator;
@@ -77,11 +84,11 @@ const initNum1 = () => {
 }
 
 const initNum2 = () => {
-  if (concat === "") {
-    return console.log("concat is empty");
+  if (numBuffer === "") {
+    return console.log("numBuffer is empty");
   }
-  num2 = parseInt(concat);
-  concat = "";
+  num2 = parseInt(numBuffer);
+  numBuffer = "";
   return num2;
 }
 
@@ -91,7 +98,7 @@ const chain = () => {
   }
   const result = operate(num1, prevOperator, num2);
   console.log("= " + result);
-  displayValue.innerHTML = concat;
+  displayValue.innerHTML = numBuffer;
   displaySubValue.innerHTML = result + " " + operator;
   // set num1 to result
   num1 = result; 
@@ -120,7 +127,7 @@ const log = (e) => {
       if (btnValue === "=") {
         initNum2();
         equals();
-      } else if (concat !== ""){ //chain
+      } else if (numBuffer !== ""){ //chain
         initNum2();
         chain();
         console.log(operator);
@@ -130,9 +137,9 @@ const log = (e) => {
       initNum1();
     }
   } else if (isNaN(parseInt(btnValue)) !== true){ //if a number is clicked
-    concat = concat.concat(btnValue);
-    console.log(concat);
-    displayValue.innerHTML = concat;
+    numBuffer = numBuffer.concat(btnValue);
+    console.log(numBuffer);
+    displayValue.innerHTML = numBuffer;
     lastInput = "number";
   } 
   logging();

@@ -1,20 +1,15 @@
 const displayValue = document.querySelector('.display');
 const displaySubValue = document.querySelector('.sub-display');
 
-let numBuffer = "";
-let num1 = 0;
-let num2 = 0;
-let num1Stored = false;
-let operator = "";
-let prevOperator = "";
 let lastInput = "";
 
 let userInput = {
   numBuffer: "",
-  num1: 0,
-  operator: "",
-  prevOperator: "",
-  num2: 0,
+//  num1: 0,
+  num1Stored: false,
+//  operator: "",
+//  prevOperator: "",
+//  num2: 0,
 }
 
 const logging = () => {
@@ -59,49 +54,49 @@ const equals = () => {
   if (userInput.num1 === 0 || userInput.num2 === 0) {
     return console.log("missing parameters: " + " num1= " + userInput.num1 + " operator= " + userInput.operator + " num2= " + userInput.num2);
   }
-  const result = operate(num1, operator, num2);
+  const result = operate(userInput.num1, userInput.operator, userInput.num2);
   console.log("= " + result);
-  displaySubValue.innerHTML = num1 + " " + operator + " " + num2 + " = ";
+  displaySubValue.innerHTML = userInput.num1 + " " + userInput.operator + " " + userInput.num2 + " = ";
   displayValue.innerHTML = result;
   // set num1 to result
-  num1 = result; 
+  userInput.num1 = result; 
   //reset num2
-  num2 = 0; 
+  userInput.num2 = 0; 
   return result;
 }
 
 const initNum1 = () => {
-  num1 = parseInt(numBuffer);
-  numBuffer = "";
-  displayValue.innerHTML = numBuffer;
-  displaySubValue.innerHTML = num1 + " " + operator;
-  num1Stored = true;
-  prevOperator = operator;
-  return num1Stored;
+  userInput.num1 = parseInt(userInput.numBuffer);
+  userInput.numBuffer = "";
+  displayValue.innerHTML = "";
+  displaySubValue.innerHTML = userInput.num1 + " " + userInput.operator;
+  userInput.num1Stored = true;
+  userInput.prevOperator = userInput.operator;
+  return userInput.num1;
 }
 
 const initNum2 = () => {
-  if (numBuffer === "") {
+  if (userInput.numBuffer === "") {
     return console.log("numBuffer is empty");
   }
-  num2 = parseInt(numBuffer);
-  numBuffer = "";
-  return num2;
+  userInput.num2 = parseInt(userInput.numBuffer);
+  userInput.numBuffer = "";
+  return userInput.num2;
 }
 
 const chain = () => {
-  if (num1 === 0 || num2 === 0) {
-    return console.log("missing parameters: " + " num1= " + num1 + " operator= " + prevOperator + " num2= " + num2);
+  if (userInput.num1 === 0 || userInput.num2 === 0) {
+    return console.log("missing parameters: " + " num1= " + userInput.num1 + " operator= " + userInput.prevOperator + " num2= " + userInput.num2);
   }
-  const result = operate(num1, prevOperator, num2);
+  const result = operate(userInput.num1, userInput.prevOperator, userInput.num2);
   console.log("= " + result);
-  displayValue.innerHTML = numBuffer;
-  displaySubValue.innerHTML = result + " " + operator;
+  displayValue.innerHTML = userInput.numBuffer;
+  displaySubValue.innerHTML = result + " " + userInput.operator;
   // set num1 to result
-  num1 = result; 
+  userInput.num1 = result; 
   //reset num2
-  num2 = 0; 
-  prevOperator = operator;
+  userInput.num2 = 0; 
+  userInput.prevOperator = userInput.operator;
   return result;
 }
 
@@ -115,28 +110,29 @@ const log = (e) => {
     backspace();
   } else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+" || btnValue === "=") && lastInput !== "") {
     if (btnValue !== "=") { //equals is not an operator
-      operator = btnValue;
+      userInput.operator = btnValue;
       lastInput = "operator";
     } else {
       lastInput = "equals";
     }
-    if (num1Stored) { //equals
+    if (userInput.num1Stored) { //equals
       if (btnValue === "=") {
         initNum2();
         equals();
-      } else if (numBuffer !== ""){ //chain
+      } else if (userInput.numBuffer !== ""){ //chain
         initNum2();
         chain();
-        console.log(operator);
+        console.log(userInput.operator);
       }
-    } else if (num1Stored === false){ //first run
-      console.log(operator);
+    } else if (userInput.num1Stored === false){ //first run
+      console.log(userInput.operator);
       initNum1();
     }
   } else if (isNaN(parseInt(btnValue)) !== true){ //if a number is clicked
-    userInput.numBuffer = numBuffer.concat(btnValue);
-    console.log(numBuffer);
+    userInput.numBuffer = userInput.numBuffer.concat(btnValue);
+    console.log(userInput.numBuffer);
     displayValue.innerHTML = userInput.numBuffer;
+    lastInput = "number";
   } 
   logging();
 }

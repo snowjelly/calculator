@@ -2,7 +2,7 @@ const displayValue = document.querySelector('.display');
 const displaySubValue = document.querySelector('.sub-display');
 
 let lastInput = "";
-
+let inputStore = [];
 let userInput = {
   numBuffer: "",
 //  num1: 0,
@@ -13,7 +13,8 @@ let userInput = {
 }
 
 const logging = () => {
-  console.table(userInput)
+  console.log(inputStore);
+  console.table(userInput);
 }
 
 const clear = () => {
@@ -108,33 +109,36 @@ const log = (e) => {
     clear();
   } else if (btnValue === "⌫") {
     backspace();
-  } else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+" || btnValue === "=") && lastInput !== "") {
-    if (btnValue !== "=") { //equals is not an operator
-      userInput.operator = btnValue;
-      lastInput = "operator";
-    } else {
-      lastInput = "equals";
+  } else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+")) {
+    if (typeof inputStore[inputStore.length - 1] === 'string' || userInput.numBuffer === "") {
+      return console.log('cant do that fr');
     }
-    if (userInput.num1Stored) { //equals
-      if (btnValue === "=") {
-        initNum2();
-        equals();
-      } else if (userInput.numBuffer !== ""){ //chain
-        initNum2();
-        chain();
-        console.log(userInput.operator);
-      }
-    } else if (userInput.num1Stored === false){ //first run
-      console.log(userInput.operator);
-      initNum1();
+    //logging();
+
+    if (userInput.num1Stored === false) { //init num1 on first run
+      inputStore.push(userInput.num1 = initNum1());
+    } else { //chaining operators
+      inputStore.push(userInput.num2 = initNum2());
+      //console.log(userInput.operator);
+      inputStore.push("="); 
+      inputStore.push(1000); //chain();
     }
+    inputStore.push(btnValue); //push operator
+    inputStore.operator = btnValue;
+    logging();
+  } else if (btnValue === "=") {
+    if (typeof inputStore[inputStore.length - 1] === 'string' || userInput.numBuffer === "") {
+      return console.log('cant do that fr');
+    }
+      inputStore.push(userInput.num2 = initNum2());
+      inputStore.push("=");
+      inputStore.push(1000); //equals()
+      logging();
   } else if (isNaN(parseInt(btnValue)) !== true){ //if a number is clicked
     userInput.numBuffer = userInput.numBuffer.concat(btnValue);
     console.log(userInput.numBuffer);
     displayValue.innerHTML = userInput.numBuffer;
-    lastInput = "number";
   } 
-  logging();
 }
 
 const btns = document.querySelectorAll('button');

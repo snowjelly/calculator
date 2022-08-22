@@ -4,7 +4,7 @@ const displaySubValue = document.querySelector('.sub-display');
 let lastInput = "";
 let inputStore = [];
 let userInput = {
-  numBuffer: "",
+//  numBuffer: "",
 //  num1: 0,
   num1Stored: false,
 //  operator: "",
@@ -73,18 +73,22 @@ const equals = () => {
 }
 
 const initNum1 = () => {
-  userInput.num1 = parseInt(userInput.numBuffer);
-  userInput.numBuffer = "";
-  displayValue.innerHTML = "";
-  displaySubValue.innerHTML = userInput.num1 + " " + userInput.operator;
-  userInput.num1Stored = true;
-  //userInput.prevOperator = userInput.operator;
-  return userInput.num1;
+  if (userInput.numBuffer === "") {
+    return console.log('num1 init fail')
+  } else {
+    userInput.num1 = parseInt(userInput.numBuffer);
+    userInput.numBuffer = "";
+    displayValue.innerHTML = "";
+    displaySubValue.innerHTML = userInput.num1 + " " + userInput.operator;
+    userInput.num1Stored = true;
+    //userInput.prevOperator = userInput.operator;
+    return userInput.num1;
+  }
 }
 
 const initNum2 = () => {
   if (userInput.numBuffer === "") {
-    return console.log('fail');
+    return console.log('num2 init fail');
   } else {
     userInput.num2 = parseInt(userInput.numBuffer);
     userInput.numBuffer = "";
@@ -114,13 +118,13 @@ const log = (e) => {
   const btnValue = e.target.childNodes[0].nodeValue.toString();
   //console.log(btnValue);
     
-  if (btnValue === "C") {
+  if (btnValue === "C" && typeof userInput.numBuffer !== 'undefined') {
     clear();
   }
-  else if (btnValue === "⌫") {
+  else if (btnValue === "⌫" && typeof userInput.numBuffer !== 'undefined') {
     backspace();
   }
-  else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+")) {
+  else if ((btnValue === "÷" || btnValue === "×" || btnValue === "-" || btnValue === "+") && typeof userInput.numBuffer !== 'undefined') {
 
     if (typeof inputStore[inputStore.length - 1] === 'string' && userInput.numBuffer === "") {
       logging();
@@ -132,11 +136,11 @@ const log = (e) => {
 
 
     //init num1 on first run
-    if (userInput.num1Stored === false) { 
+    if (userInput.num1Stored === false && userInput.numBuffer !== "") { 
       inputStore.push(userInput.num1 = initNum1());
       inputStore.push(btnValue);
       return console.log('num1 initialized');
-      } 
+    }
     
     //if the current array value is a number push the operator after
     if (typeof inputStore[inputStore.length - 1] === 'number') {
@@ -163,7 +167,7 @@ const log = (e) => {
 
 
     userInput.prevOperator = userInput.operator;
-  } else if (btnValue === "=") {
+  } else if (btnValue === "=" && typeof userInput.numBuffer !== 'undefined') {
 
     if ((inputStore[inputStore.length - 1] === userInput.operator || inputStore[inputStore.length - 2] === "=") && userInput.numBuffer !== "") {
 
@@ -179,10 +183,13 @@ const log = (e) => {
     }
     // inputStore.push(equals()); //equals()
      logging();
-  } else if (isNaN(parseInt(btnValue)) !== true){ //if a number is clicked
-    userInput.numBuffer = userInput.numBuffer.concat(btnValue);
-    console.log(userInput.numBuffer);
-    displayValue.innerHTML = userInput.numBuffer;
+  } else if (isNaN(parseInt(btnValue)) !== true) { //if a number is clicked
+    if (typeof userInput.numBuffer === 'undefined') {
+      userInput.numBuffer = "";
+    }
+      userInput.numBuffer = userInput.numBuffer.concat(btnValue);
+      console.log(userInput.numBuffer);
+      displayValue.innerHTML = userInput.numBuffer;
   } 
 }
 

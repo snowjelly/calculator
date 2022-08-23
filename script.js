@@ -1,7 +1,6 @@
 const displayValue = document.querySelector('.display');
 const displaySubValue = document.querySelector('.sub-display');
 
-let lastInput = "";
 let inputStore = [];
 let userInput = {
 //  numBuffer: "",
@@ -19,12 +18,12 @@ const logging = () => {
 
 const clear = () => {
   inputStore = [];
-  userInput.numBuffer = "";
-  userInput.num1 = 0;
-  userInput.num2 = 0;
-  userInput.operator = "";
   userInput.num1Stored = false;
-  //userInput.prevOperator = "";
+  delete userInput.numBuffer;
+  delete userInput.num1;
+  delete userInput.num2;
+  delete userInput.operator;
+  delete userInput.prevOperator;
   displayValue.innerHTML = "";
   displaySubValue.innerHTML = "";
   return "Cleared";
@@ -36,19 +35,22 @@ const backspace = () => {
 }
 
 const operate = (num1, operator, num2) => {
-  if (num1 === 0) {
-    return console.log('num1 is missing');
-  } else if (num2 === 0) {
-    return console.log('num2 is missing');
-  }
 
   if (operator === "÷") {
-    return divide(num1, num2);
-  } else if (operator === "×") {
+    if (num1 === 0 || num2 === 0) {
+      return displayValue.innerHTML = "Cannot divide by 0";
+    }
+    else {
+      return divide(num1, num2);
+    }
+  }
+  else if (operator === "×") {
     return multiply(num1, num2);
-  } else if (operator === "-") {
+  }
+  else if (operator === "-") {
     return subtract(num1, num2);
-  } else if (operator === "+") {
+  }
+  else if (operator === "+") {
     return add(num1, num2);
   }
 }
@@ -79,7 +81,6 @@ const initNum1 = () => {
     displayValue.innerHTML = "";
     displaySubValue.innerHTML = userInput.num1 + " " + userInput.operator;
     userInput.num1Stored = true;
-    //userInput.prevOperator = userInput.operator;
     return userInput.num1;
   }
 }
@@ -94,9 +95,8 @@ const initNum2 = () => {
   }
 }
 
-const log = (e) => {
+const calculator = (e) => {
   const btnValue = e.target.childNodes[0].nodeValue.toString();
-  //console.log(btnValue);
     
   if (btnValue === "C" && typeof userInput.numBuffer !== 'undefined') {
     clear();
@@ -111,7 +111,6 @@ const log = (e) => {
       return console.log('cant do that fr');
     }
 
-    
       
 
     
@@ -134,7 +133,6 @@ const log = (e) => {
       else {
         inputStore.push(userInput.prevOperator);
       }
-      //inputStore.push(userInput.num2 = initNum2());
     }
 
     //if it isnt the first run and the current array value is a string then calculate
@@ -181,7 +179,7 @@ const log = (e) => {
 }
 
 const btns = document.querySelectorAll('button');
-btns.forEach(btn => btn.addEventListener('click', log));
+btns.forEach(btn => btn.addEventListener('click', calculator));
 
 
 

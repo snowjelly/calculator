@@ -130,9 +130,10 @@ const log = (e) => {
       logging();
       return console.log('cant do that fr');
     }
-    else {
+      
+
+    
       userInput.operator = btnValue;
-    }
 
 
     //init num1 on first run
@@ -147,12 +148,14 @@ const log = (e) => {
       if (typeof userInput.prevOperator === 'undefined') {
         inputStore.push(userInput.operator);
       }
-      inputStore.push(userInput.prevOperator);
+      else {
+        inputStore.push(userInput.prevOperator);
+      }
       //inputStore.push(userInput.num2 = initNum2());
     }
 
     //if it isnt the first run and the current array value is a string then calculate
-    if (userInput.num1Stored && typeof inputStore[inputStore.length - 1] === 'string') {
+    if (userInput.num1Stored && typeof inputStore[inputStore.length - 1] === 'string' && userInput.numBuffer !== "") {
       inputStore.push(userInput.num2 = initNum2());
       inputStore.push("=");
       inputStore.push(1337);
@@ -173,7 +176,7 @@ const log = (e) => {
 
       if (inputStore[inputStore.length - 2] === "=") {
         inputStore.push(userInput.operator);
-    }
+      }
       inputStore.push(userInput.num2 = initNum2());
       inputStore.push(btnValue);
       inputStore.push(1337);

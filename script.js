@@ -16,7 +16,14 @@ const logging = () => {
   console.table(userInput);
 }
 
-const clear = () => {
+const clear = (zero = false) => {
+  if (zero) {
+    displayValue.innerHTML = "Cannot divide by 0";
+  }
+  else {
+    displayValue.innerHTML = "";
+  }
+  displaySubValue.innerHTML = "";
   inputStore = [];
   userInput.num1Stored = false;
   delete userInput.numBuffer;
@@ -24,8 +31,6 @@ const clear = () => {
   delete userInput.num2;
   delete userInput.operator;
   delete userInput.prevOperator;
-  displayValue.innerHTML = "";
-  displaySubValue.innerHTML = "";
   return "Cleared";
 }
 
@@ -38,7 +43,7 @@ const operate = (num1, operator, num2) => {
 
   if (operator === "÷") {
     if (num1 === 0 || num2 === 0) {
-      return displayValue.innerHTML = "Cannot divide by 0";
+      return null;
     }
     else {
       return divide(num1, num2);
@@ -60,11 +65,19 @@ const equals = (chain = false) => {
   if (chain) {
     console.log('chain');
     result = operate(userInput.num1, userInput.prevOperator, userInput.num2);
+    if (result === null) {
+      const zero = true;
+      return clear(zero);
+    }
     displaySubValue.innerHTML = userInput.num1 + " " + userInput.prevOperator + " " + userInput.num2 + " " + "=";
   }
   else {
     console.log('not a chain');
     result = operate(userInput.num1, userInput.operator, userInput.num2);
+    if (result === null) {
+      const zero = true;
+      return clear(zero);
+    }
     displaySubValue.innerHTML = userInput.num1 + " " + userInput.operator + " " + userInput.num2 + " " + "=";
   }
   displayValue.innerHTML = result;

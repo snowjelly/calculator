@@ -65,13 +65,13 @@ p {
 .calc-content {
   display: flex;
   flex: 10;
-
 }
 
 .calc-numbers {
   display: flex;
   flex-direction: column;
   flex: 3;
+  background-color: #131516;
 }
 
 .calc-numbers > * {
@@ -98,11 +98,11 @@ p {
   justify-content: space-evenly;
 }
 
-.calc-row4 .num {
-  justify-content: center;
-}
-
 .calc-operators > * {
   display: flex;
   flex: 1;
+}
+
+#zero {
+  justify-content: right;
 }

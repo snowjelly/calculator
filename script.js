@@ -93,7 +93,7 @@ const initNum1 = () => {
   if (userInput.numBuffer === "") {
     return console.log('num1 init fail')
   } else {
-    userInput.num1 = parseInt(userInput.numBuffer);
+    userInput.num1 = parseFloat(userInput.numBuffer);
     userInput.numBuffer = "";
     displayValue.innerHTML = "";
     displaySubValue.innerHTML = userInput.num1 + " " + userInput.operator;
@@ -106,7 +106,7 @@ const initNum2 = () => {
   if (userInput.numBuffer === "") {
     return console.log('num2 init fail');
   } else {
-    userInput.num2 = parseInt(userInput.numBuffer);
+    userInput.num2 = parseFloat(userInput.numBuffer);
     userInput.numBuffer = "";
     return userInput.num2;
   }
@@ -185,14 +185,17 @@ const calculator = (e) => {
     }
     // inputStore.push(equals()); //equals()
      logging();
-  } else if (isNaN(parseInt(btnValue)) !== true) { //if a number is clicked
+  } else if (isNaN(parseInt(btnValue)) !== true || btnValue === ".") { //if a number is clicked
     if (typeof userInput.numBuffer === 'undefined') {
       userInput.numBuffer = "";
     }
-      userInput.numBuffer = userInput.numBuffer.concat(btnValue);
-      console.log(userInput.numBuffer);
-      displayValue.innerHTML = userInput.numBuffer;
-  } 
+    if (userInput.numBuffer.indexOf(".") !== -1 && btnValue === ".") {
+      return;
+    }
+    userInput.numBuffer = userInput.numBuffer.concat(btnValue);
+    console.log(userInput.numBuffer);
+    displayValue.innerHTML = userInput.numBuffer;
+  }
 }
 
 const btns = document.querySelectorAll('button');

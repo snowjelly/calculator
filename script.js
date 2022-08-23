@@ -56,10 +56,12 @@ const operate = (num1, operator, num2) => {
 const equals = (chain = false) => {
   let result = 0;
   if (chain) {
+    console.log('chain');
     result = operate(userInput.num1, userInput.prevOperator, userInput.num2);
     displaySubValue.innerHTML = userInput.num1 + " " + userInput.prevOperator + " " + userInput.num2 + " " + "=";
   }
   else {
+    console.log('not a chain');
     result = operate(userInput.num1, userInput.operator, userInput.num2);
     displaySubValue.innerHTML = userInput.num1 + " " + userInput.operator + " " + userInput.num2 + " " + "=";
   }
@@ -108,16 +110,19 @@ const log = (e) => {
       logging();
       return console.log('cant do that fr');
     }
+
+    
       
 
     
-      userInput.operator = btnValue;
+    userInput.operator = btnValue;
 
 
     //init num1 on first run
     if (userInput.num1Stored === false && userInput.numBuffer !== "") { 
       inputStore.push(userInput.num1 = initNum1());
       inputStore.push(btnValue);
+      userInput.prevOperator = btnValue;
       return console.log('num1 initialized');
     }
     

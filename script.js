@@ -53,22 +53,18 @@ const operate = (num1, operator, num2) => {
   }
 }
 
-const equals = () => {
-  if (userInput.num1 === 0 || userInput.num2 === 0) {
-    return console.log("missing parameters: " + " num1= " + userInput.num1 + " operator= " + userInput.operator + " num2= " + userInput.num2);
-  } else if (typeof inputStore[1] !== 'string') {
-    
+const equals = (chain = false) => {
+  let result = 0;
+  if (chain) {
+    result = operate(userInput.num1, userInput.prevOperator, userInput.num2);
+    displaySubValue.innerHTML = userInput.num1 + " " + userInput.prevOperator + " " + userInput.num2 + " " + "=";
   }
-  const result = operate(userInput.num1, userInput.operator, userInput.num2);
-  displaySubValue.innerHTML = userInput.num1 + " " + userInput.operator + " " + userInput.num2 + " = ";
+  else {
+    result = operate(userInput.num1, userInput.operator, userInput.num2);
+    displaySubValue.innerHTML = userInput.num1 + " " + userInput.operator + " " + userInput.num2 + " " + "=";
+  }
   displayValue.innerHTML = result;
   userInput.num1 = result;
-  userInput.num2 = 0; 
-  //userInput.prevOperator = userInput.operator;
-  // inputStore.shift();
-  // inputStore.shift();
-  // inputStore.shift();
-  // inputStore.shift();
   return result;
 }
 
@@ -94,24 +90,6 @@ const initNum2 = () => {
     userInput.numBuffer = "";
     return userInput.num2;
   }
-}
-
-const chain = () => {
-  if (userInput.num1 === 0 || userInput.num2 === 0) {
-    return console.log("missing parameters: " + " num1= " + userInput.num1 + " operator= " + userInput.prevOperator + " num2= " + userInput.num2);
-  }
-  const result = operate(userInput.num1, userInput.prevOperator, userInput.num2);
-  displayValue.innerHTML = userInput.numBuffer;
-  displaySubValue.innerHTML = result + " " + userInput.operator;
-  //update variables
-  userInput.num1 = result;
-  userInput.num2 = 0; 
-  userInput.prevOperator = userInput.operator;
-  // inputStore.shift();
-  // inputStore.shift();
-  // inputStore.shift();
-  // inputStore.shift();
-  return result;
 }
 
 const log = (e) => {
@@ -156,9 +134,10 @@ const log = (e) => {
 
     //if it isnt the first run and the current array value is a string then calculate
     if (userInput.num1Stored && typeof inputStore[inputStore.length - 1] === 'string' && userInput.numBuffer !== "") {
+      const chain = true;
       inputStore.push(userInput.num2 = initNum2());
       inputStore.push("=");
-      inputStore.push(1337);
+      inputStore.push(equals(chain));
       logging();
     }
     
@@ -179,7 +158,7 @@ const log = (e) => {
       }
       inputStore.push(userInput.num2 = initNum2());
       inputStore.push(btnValue);
-      inputStore.push(1337);
+      inputStore.push(equals());
     }
     else {
       return console.log('cant do that');

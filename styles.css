@@ -3,6 +3,10 @@ body {
   color: #d8d4cf;
 }
 
+button {
+  border-radius: 5px;
+}
+
 p {
   margin: 0px;
   font-size: x-large;
@@ -44,8 +48,9 @@ p {
   flex-direction: column;
   width: 300px;
   height: 450px;
-  background-color: hsl(200, 7%, 30%);
-  border: 1px solid #d8d4cf;
+  border: 5px solid #d8d4cf;
+  border-radius: 5px;
+  box-shadow: 5px 10px #67cbdda9;
 }
 
 .display-wrapper {
@@ -54,7 +59,8 @@ p {
   flex: 1;
   justify-content: right;
   align-items: flex-end;
-  border-bottom: 1px solid #d8d4cf;
+  border: 2px solid #131516;
+  border-radius: 5px;
   background-color: #67cbdda9;
 }
 

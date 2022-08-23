@@ -1,6 +1,7 @@
 const displayValue = document.querySelector('.display');
 const displaySubValue = document.querySelector('.sub-display');
 
+const logs = false;
 let inputStore = [];
 let userInput = {
 //  numBuffer: "",
@@ -12,8 +13,10 @@ let userInput = {
 }
 
 const logging = () => {
-  console.log(inputStore);
-  console.table(userInput);
+  if (logs) {
+    console.log(inputStore);
+    console.table(userInput);
+  }
 }
 
 const roundToTwo = (num) => {
@@ -67,7 +70,7 @@ const operate = (num1, operator, num2) => {
 const equals = (chain = false) => {
   let result = 0;
   if (chain) {
-    console.log('chain');
+    //console.log('chain');
     result = roundToTwo(operate(userInput.num1, userInput.prevOperator, userInput.num2));
     if (result === null) {
       const zero = true;
@@ -76,7 +79,7 @@ const equals = (chain = false) => {
     displaySubValue.innerHTML = userInput.num1 + " " + userInput.prevOperator + " " + userInput.num2 + " " + "=";
   }
   else {
-    console.log('not a chain');
+    //console.log('not a chain');
     result = roundToTwo(operate(userInput.num1, userInput.operator, userInput.num2));
     if (result === null) {
       const zero = true;
@@ -139,7 +142,7 @@ const calculator = (e) => {
       inputStore.push(userInput.num1 = initNum1());
       inputStore.push(btnValue);
       userInput.prevOperator = btnValue;
-      return console.log('num1 initialized');
+      return ('num1 initialized');
     }
     
     //if the current array value is a number push the operator after
@@ -181,10 +184,9 @@ const calculator = (e) => {
       inputStore.push(equals());
     }
     else {
-      return console.log('cant do that');
+      return ('cant do that');
     }
-    // inputStore.push(equals()); //equals()
-     logging();
+    logging();
   } else if (isNaN(parseInt(btnValue)) !== true || btnValue === ".") { //if a number is clicked
     if (typeof userInput.numBuffer === 'undefined') {
       userInput.numBuffer = "";
@@ -193,7 +195,7 @@ const calculator = (e) => {
       return;
     }
     userInput.numBuffer = userInput.numBuffer.concat(btnValue);
-    console.log(userInput.numBuffer);
+    (userInput.numBuffer);
     displayValue.innerHTML = userInput.numBuffer;
   }
 }

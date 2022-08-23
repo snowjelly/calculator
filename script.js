@@ -16,6 +16,10 @@ const logging = () => {
   console.table(userInput);
 }
 
+const roundToTwo = (num) => {
+  return +(Math.round(num + "e+2")  + "e-2");
+}
+
 const clear = (zero = false) => {
   if (zero) {
     displayValue.innerHTML = "Cannot divide by 0";
@@ -64,7 +68,7 @@ const equals = (chain = false) => {
   let result = 0;
   if (chain) {
     console.log('chain');
-    result = operate(userInput.num1, userInput.prevOperator, userInput.num2);
+    result = roundToTwo(operate(userInput.num1, userInput.prevOperator, userInput.num2));
     if (result === null) {
       const zero = true;
       return clear(zero);
@@ -73,7 +77,7 @@ const equals = (chain = false) => {
   }
   else {
     console.log('not a chain');
-    result = operate(userInput.num1, userInput.operator, userInput.num2);
+    result = roundToTwo(operate(userInput.num1, userInput.operator, userInput.num2));
     if (result === null) {
       const zero = true;
       return clear(zero);
